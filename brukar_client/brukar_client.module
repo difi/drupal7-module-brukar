@@ -183,7 +183,7 @@ function brukar_client_user_logout($account) {
   /* If logout parameter is not set, we redirect user to brukar.difi.no to perform logout from brukar.difi.no first.
      brukar.difi.no will redirect user back to site with url paremter logout=true */
   if ($params['logout'] != "true") {
-    $url = variable_get('brukar_url', '') . "logout/drupal?returnTo=" . $base_url . "/user/logout";
+    $url = variable_get('brukar_url', '') . "logout?returnTo=" . $base_url . "/user/logout";
     drupal_goto($url);
   }
 }
