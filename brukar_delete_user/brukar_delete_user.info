@@ -1,0 +1,7 @@
+name = Brukar Delete Users
+description = Delete users
+core = 7.x
+package = Brukar
+version = 7.x-0.4
+
+dependencies[] = brukar_common

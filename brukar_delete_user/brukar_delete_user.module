@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function brukar_delete_user_menu() {
+  return [
+    'delete_user' => array(
+      'title' => 'Delete User',
+      'page callback' => 'brukar_delete_user_delete_user',
+      'type' => MENU_IS_LOCAL_ACTION,
+      'access callback' => TRUE,
+    ),
+  ];
+}
+
+function brukar_delete_user_delete_user() {
+  watchdog('brukar_delete_user_delete_user', 'hei');
+}
