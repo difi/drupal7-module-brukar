@@ -124,11 +124,13 @@ function brukar_delete_user_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'users';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter-kriterier: Bruker: Fornavn (field_given_name) */
-  $handler->display->display_options['filters']['field_given_name_value']['id'] = 'field_given_name_value';
-  $handler->display->display_options['filters']['field_given_name_value']['table'] = 'field_data_field_given_name';
-  $handler->display->display_options['filters']['field_given_name_value']['field'] = 'field_given_name_value';
-  $handler->display->display_options['filters']['field_given_name_value']['operator'] = 'not empty';
+  /* Filter-kriterier: Bruker: Delete User (field_delete) */
+  $handler->display->display_options['filters']['field_delete_value']['id'] = 'field_delete_value';
+  $handler->display->display_options['filters']['field_delete_value']['table'] = 'field_data_field_delete';
+  $handler->display->display_options['filters']['field_delete_value']['field'] = 'field_delete_value';
+  $handler->display->display_options['filters']['field_delete_value']['value'] = array(
+    1 => '1',
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
