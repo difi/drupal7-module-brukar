@@ -15,12 +15,28 @@ function brukar_delete_user_menu() {
     'delete_user' => array(
       'title' => 'Delete User',
       'page callback' => 'brukar_delete_user_delete_user',
-      'type' => MENU_IS_LOCAL_ACTION,
+      'type' => MENU_CALLBACK,
       'access callback' => TRUE,
+      'delivery callback' => 'drupal_json_output',
     ),
   ];
 }
 
 function brukar_delete_user_delete_user() {
-  watchdog('brukar_delete_user_delete_user', 'hei');
+  $raw_post_data = file_get_contents("php://input");
+  $json = json_decode($raw_post_data, TRUE);
+
+  if(isset($json) && isset($json['userkey'])) {
+    // TODO: Find and alter user
+    $result = [
+      'status' => 'ok',
+    ];
+  }
+  else {
+    $result = [
+      'status' => 'error',
+    ];
+  }
+
+  drupal_json_output($result);
 }
