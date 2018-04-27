@@ -1,5 +1,8 @@
 <?php
 
+require_once(drupal_get_path('module', 'brukar_common') . '/OAuth.php');
+require_once(drupal_get_path('module', 'brukar_server') . '/brukar_server.class.php');
+
 /**
  * Implements hook_views_api().
  */
@@ -17,17 +20,34 @@ function brukar_delete_user_menu() {
       'page callback' => 'brukar_delete_user_delete_user',
       'type' => MENU_CALLBACK,
       'access callback' => TRUE,
-      'delivery callback' => 'drupal_json_output',
     ),
   ];
 }
 
 function brukar_delete_user_delete_user() {
+  $server = new OAuthServer(new BrukarServerDataStore());
+  $server->add_signature_method(new OAuthSignatureMethod_HMAC_SHA1());
+
+  $request = OAuthRequest::from_request();
+
+  //$verified = $server->verify_request($request);
+  // TODO: OAUTH..
+
   $raw_post_data = file_get_contents("php://input");
   $json = json_decode($raw_post_data, TRUE);
-
   if(isset($json) && isset($json['userkey'])) {
-    // TODO: Find and alter user
+    $userkey = $json['userkey'];
+    $user_db = db_select('users', 'a')
+      ->condition('data', '%' . $userkey . '%', 'LIKE')
+      ->fields('a')
+      ->execute()
+      ->fetch();
+
+    if($user_db) {
+      $user = entity_metadata_wrapper('user', $user_db->uid);
+      $user->field_delete->set(1);
+      $user->save();
+    }
     $result = [
       'status' => 'ok',
     ];
