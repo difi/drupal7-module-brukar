@@ -3,5 +3,6 @@ description = Delete users
 core = 7.x
 package = Brukar
 version = 7.x-0.4
-
+project = brukar_delete_user
+dependencies[] = views
 dependencies[] = brukar_common

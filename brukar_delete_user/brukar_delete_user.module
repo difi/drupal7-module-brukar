@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Implements hook_views_api().
+ */
+function brukar_delete_user_views_api() {
+    return array('api' => 3);
+}
+
+/**
  * Implements hook_menu().
  */
 function brukar_delete_user_menu() {
