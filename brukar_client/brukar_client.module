@@ -157,8 +157,8 @@ function brukar_client_user_load($users) {
   foreach ($users as $uid => $user) {
     if (isset($user->data['brukar'])) {
       $user->cellphone = isset($user->data['brukar']['cellphone']) ? $user->data['brukar']['cellphone'] : (isset($user->data['brukar']['phone']) ? $user->data['brukar']['phone'] : "");
-      $user->organization = $user->data['brukar']['organization'];
-      $user->homepage = $user->data['brukar']['homepage'];
+      $user->organization = isset($user->data['brukar']['organization']) ? $user->data['brukar']['organization'] : "";
+      $user->homepage = isset($user->data['brukar']['homepage']) ? $user->data['brukar']['homepage'] : "";
     }
 
     $users[$uid] = $user;
