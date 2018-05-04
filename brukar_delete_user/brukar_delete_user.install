@@ -1,6 +1,11 @@
 <?php
 
 function brukar_delete_user_install(){
+  _add_field_delete_to_user();
+  _add_brukar_application();
+}
+
+function _add_field_delete_to_user() {
   $field_delete = 'field_delete';
 
   if (!field_info_field($field_delete)){
@@ -18,10 +23,10 @@ function brukar_delete_user_install(){
       'locked' => 0,
       'module' => 'list',
       'settings' => [
-          'allowed_values' => [
-            0 => '',
-            1 => '',
-          ],
+        'allowed_values' => [
+          0 => '',
+          1 => '',
+        ],
         'allowed_values_function' => '',
         'entity_translation_sync' => FALSE,
       ],
@@ -43,17 +48,17 @@ function brukar_delete_user_install(){
       'description' => '',
       'display' => [
         'default' => [
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => [],
-        'type' => 'list_default',
-        'weight' => 30,
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => [],
+          'type' => 'list_default',
+          'weight' => 30,
         ],
-      'teaser' => [
-        'label' => 'above',
-        'settings' => [],
-        'type' => 'hidden',
-        'weight' => 0,
+        'teaser' => [
+          'label' => 'above',
+          'settings' => [],
+          'type' => 'hidden',
+          'weight' => 0,
         ],
       ],
       'ds_extras_field_template' => '',
@@ -77,4 +82,14 @@ function brukar_delete_user_install(){
     ];
     field_create_instance($instance);
   }
+}
+
+function _add_brukar_application() {
+  $application = new stdClass();
+  $application->name = variable_get('brukar_name');
+  $application->consumer_key = variable_get('brukar_consumer_key');
+  $application->consumer_secret = variable_get('brukar_consumer_secret');
+  $application->active = 1;
+  $application->url_homepage = variable_get('brukar_url');
+  drupal_write_record('brukar_application', $application);
 }
