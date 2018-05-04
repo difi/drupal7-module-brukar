@@ -72,7 +72,7 @@ function brukar_client_init() {
   // Allow drush to do the job.
   if (!function_exists('drush_main')) {
     // Handle callback
-    if (isset($_GET['oauth_token'])) {
+    if (isset($_GET['oauth_token']) && !isset($_GET['oauth_callback'])) {
       require_once(drupal_get_path('module', 'brukar_client') . '/brukar_client.oauth.php');
       brukar_client_oauth_callback();
     }
