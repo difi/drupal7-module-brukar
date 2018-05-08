@@ -2,7 +2,7 @@
 
 function brukar_delete_user_install(){
   _add_field_delete_to_user();
-  _add_brukar_application();
+  //_add_brukar_application();
 }
 
 function _add_field_delete_to_user() {

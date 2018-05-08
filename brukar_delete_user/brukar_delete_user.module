@@ -25,16 +25,16 @@ function brukar_delete_user_menu() {
 }
 
 function brukar_delete_user_delete_user() {
-  global $user;
-  $_SERVER['SERVER_NAME'] = 'dev-drupal.difi.local';
-  $server = new OAuthServer(new BrukarServerDataStore());
-  $server->add_signature_method(new OAuthSignatureMethod_HMAC_SHA1());
+  //global $user;
+  //$_SERVER['SERVER_NAME'] = 'dev-drupal.difi.local';
+  //$server = new OAuthServer(new BrukarServerDataStore());
+  //$server->add_signature_method(new OAuthSignatureMethod_HMAC_SHA1());
 
-  $request = OAuthRequest::from_request();
-  $request->unset_parameter("");
-  $request->unset_parameter("q");
+  //$request = OAuthRequest::from_request();
+  //$request->unset_parameter("");
+  //$request->unset_parameter("q");
 
-  $token = $server->verify_request($request);
+  //$token = $server->verify_request($request);
   // TODO: OAUTH..
 
   $raw_post_data = file_get_contents("php://input");
