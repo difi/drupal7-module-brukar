@@ -15,7 +15,7 @@ function brukar_delete_user_views_api() {
  */
 function brukar_delete_user_menu() {
   return [
-    'delete_user' => array(
+    '/server/api/user/delete' => array(
       'title' => 'Delete User',
       'page callback' => 'brukar_delete_user_delete_user',
       'type' => MENU_CALLBACK,
