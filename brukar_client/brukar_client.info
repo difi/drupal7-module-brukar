@@ -6,3 +6,4 @@ version = 7.x-0.4
 configure = admin/config/people/brukar
 
 dependencies[] = brukar_common
+dependencies[] = brukar_delete_user
