@@ -94,18 +94,12 @@ function brukar_client_page_greenlit($URI) {
   $green_uris = &drupal_static(__FUNCTION__);
 
   if(!$green_uris) {
-    $variable = variable_get('brukar_forced_greenlit_uri', FALSE);
-    if (!$variable) {
-      return FALSE;
-    }
-
-    $cache = cache_get($variable, 'cache');
-    if($cache && !empty($cache)) {
-      $green_uris = $cache;
+    if($cache = cache_get('brukar_forced_greenlit_uri', 'cache')) {
+      $green_uris = $cache->data;
     }
     else {
-      $green_uris = array_flip(preg_split("/\\r\\n|\\r|\\n/", $variable));
-      cache_set($variable, $green_uris, 'cache');
+      $green_uris = array_flip(preg_split("/\\r\\n|\\r|\\n/", variable_get('brukar_forced_greenlit_uri', '')));
+      cache_set('brukar_forced_greenlit_uri', $green_uris, 'cache');
     }
   }
 
