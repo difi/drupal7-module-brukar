@@ -47,7 +47,6 @@ function brukar_client_admin($form, &$form_state = array()) {
   );
   $form['behavior']['brukar_forced'] = array(
     '#type' => 'radios',
-    '#name' => 'brukar_forced',
     '#title' => 'Forced login',
     '#options' => array('Nei', 'Ja'),
     '#default_value' => variable_get('brukar_forced', '0'),
@@ -55,13 +54,14 @@ function brukar_client_admin($form, &$form_state = array()) {
 
   $form['behavior']['brukar_forced_greenlit_uri'] = array(
     '#type' => 'textarea',
-    '#title' => 'Forced login URI exceptions',
+    '#title' => 'Forced login URI exceptions (One per line)',
     '#default_value' => variable_get('brukar_forced_greenlit_uri', ''),
-    /*'#states' => [
+    '#states' => [
       'visible' => [
-        ':input[name="brukar_forced"]' => ['value' => 'Ja'],
+        ':input[value=1]' => ['checked' => TRUE],
+        ':input[name="brukar_forced"]' => ['value' => '1'],
       ],
-    ],*/
+    ],
   );
 
   $form['behavior']['brukar_hidden'] = array(
