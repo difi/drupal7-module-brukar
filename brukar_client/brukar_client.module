@@ -79,7 +79,7 @@ function brukar_client_init() {
   
     if (user_is_anonymous()) {
       // Forced login
-      if (variable_get('brukar_forced', '0') != 0)
+      if (variable_get('brukar_forced', '0') != 0 && !brukar_client_page_greenlit($_GET['q']))
         brukar_client_user_trigger();
   
       // Magic login
@@ -87,6 +87,29 @@ function brukar_client_init() {
         brukar_client_user_trigger();
     }
   }
+}
+
+
+function brukar_client_page_greenlit($URI) {
+  $green_uris = &drupal_static(__FUNCTION__);
+
+  if(!$green_uris) {
+    $variable = variable_get('brukar_forced_greenlit_uri', FALSE);
+    if (!$variable) {
+      return FALSE;
+    }
+
+    $cache = cache_get($variable, 'cache');
+    if($cache && !empty($cache)) {
+      $green_uris = $cache;
+    }
+    else {
+      $green_uris = array_flip(preg_split("/\\r\\n|\\r|\\n/", $variable));
+      cache_set($variable, $green_uris, 'cache');
+    }
+  }
+
+  return isset($green_uris[$URI]);
 }
 
 /**

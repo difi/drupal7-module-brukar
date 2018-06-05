@@ -47,10 +47,23 @@ function brukar_client_admin($form, &$form_state = array()) {
   );
   $form['behavior']['brukar_forced'] = array(
     '#type' => 'radios',
+    '#name' => 'brukar_forced',
     '#title' => 'Forced login',
     '#options' => array('Nei', 'Ja'),
     '#default_value' => variable_get('brukar_forced', '0'),
   );
+
+  $form['behavior']['brukar_forced_greenlit_uri'] = array(
+    '#type' => 'textarea',
+    '#title' => 'Forced login URI exceptions',
+    '#default_value' => variable_get('brukar_forced_greenlit_uri', ''),
+    /*'#states' => [
+      'visible' => [
+        ':input[name="brukar_forced"]' => ['value' => 'Ja'],
+      ],
+    ],*/
+  );
+
   $form['behavior']['brukar_hidden'] = array(
     '#type' => 'radios',
     '#title' => 'Hidden login',
