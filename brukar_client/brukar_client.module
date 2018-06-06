@@ -38,8 +38,14 @@ function brukar_client_menu() {
   if(variable_get('brukar_forced', '0') != 0) {
     $rebuild = variable_get('menu_rebuild_needed', FALSE);
     if($rebuild) {
-      /* Set rebuild to false to avoid stack overflow when calling menu_get_item */
+      /* Override menu_rebuild_needed to avoid stack overflow when calling menu_get_item */
       variable_set('menu_rebuild_needed', FALSE);
+    }
+
+    $masks = variable_get('menu_masks', TRUE);
+    if (!$masks) {
+      /* Override menu_masks to avoid stack overflow when calling menu_get_item */
+      variable_set('menu_masks', TRUE);
     }
 
     $uris = preg_split("/\\r\\n|\\r|\\n/", variable_get('brukar_forced_greenlit_uri', ''));
@@ -54,7 +60,10 @@ function brukar_client_menu() {
     }
 
     if($rebuild) {
-      variable_set('menu_rebuild_needed', TRUE);
+      variable_set('menu_rebuild_needed', $rebuild);
+    }
+    if(!$masks) {
+      variable_set('menu_masks', $masks);
     }
   }
 
@@ -79,9 +88,16 @@ function brukar_client_menu_alter(&$items) {
   if(variable_get('brukar_forced', '0') != 0) {
     $rebuild = variable_get('menu_rebuild_needed', FALSE);
     if($rebuild) {
-      /* Set rebuild to false to avoid stack overflow when calling menu_get_item */
+      /* Override menu_rebuild_needed to avoid stack overflow when calling menu_get_item */
       variable_set('menu_rebuild_needed', FALSE);
     }
+
+    $masks = variable_get('menu_masks', array());
+    if (!$masks) {
+      /* Override menu_masks to avoid stack overflow when calling menu_get_item */
+      variable_set('menu_masks', TRUE);
+    }
+
     $uris = preg_split("/\\r\\n|\\r|\\n/", variable_get('brukar_forced_greenlit_uri', ''));
 
     foreach($uris as $i => $uri) {
@@ -95,7 +111,10 @@ function brukar_client_menu_alter(&$items) {
     }
 
     if($rebuild) {
-      variable_set('menu_rebuild_needed', TRUE);
+      variable_set('menu_rebuild_needed', $rebuild);
+    }
+    if(!$masks) {
+      variable_set('menu_masks', $masks);
     }
   }
 }
