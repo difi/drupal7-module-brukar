@@ -87,7 +87,7 @@ function brukar_client_admin_form_submit($form, &$form_state) {
     // Have to set variable before going into menu_router_build
     variable_set('brukar_forced', $form_state['values']['brukar_forced']);
     variable_set('brukar_forced_greenlit_uri', $form_state['values']['brukar_forced_greenlit_uri']);
-    menu_router_build();
+    menu_rebuild();
   }
 }
 
