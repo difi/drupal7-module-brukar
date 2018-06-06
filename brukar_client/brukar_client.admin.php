@@ -76,8 +76,19 @@ function brukar_client_admin($form, &$form_state = array()) {
     '#options' => array('Nei', 'Ja'),
     '#default_value' => variable_get('brukar_dup', '0'),
   );
+
+  $form['#submit'][] = 'brukar_client_admin_form_submit';
   
   return system_settings_form($form);
+}
+
+function brukar_client_admin_form_submit($form, &$form_state) {
+  if($form_state['values']['brukar_forced'] == 1) {
+    // Have to set variable before going into menu_router_build
+    variable_set('brukar_forced', $form_state['values']['brukar_forced']);
+    variable_set('brukar_forced_greenlit_uri', $form_state['values']['brukar_forced_greenlit_uri']);
+    menu_router_build();
+  }
 }
 
 function brukar_client_admin_validate($form, &$form_state) {

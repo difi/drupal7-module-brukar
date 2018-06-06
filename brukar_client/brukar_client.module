@@ -34,6 +34,20 @@ function brukar_client_menu() {
     'type' => MENU_DEFAULT_LOCAL_TASK,
   );
 
+  // Add menu items to URIs without menu items
+  if(variable_get('brukar_forced', '0') != 0) {
+    $uris = preg_split("/\\r\\n|\\r|\\n/", variable_get('brukar_forced_greenlit_uri', ''));
+    foreach($uris as $i => $uri) {
+      $menu_item = menu_get_item($uri);
+      if (!$menu_item) {
+        $items[$uri] = [
+          'title' => 'Brukar forced ignored',
+          'access arguments' => [], // access argument gets set in menu_alter
+        ];
+      }
+    }
+  }
+
   return $items;
 }
 
@@ -49,6 +63,21 @@ function brukar_client_menu_alter(&$items) {
     unset($items['user/register']);
     unset($items['user/password']);
     unset($items['user/reset/%/%/%']);
+  }
+
+  // Add "brukar forced ignore" to menu items on greenlit URI
+  if(variable_get('brukar_forced', '0') != 0) {
+    $uris = preg_split("/\\r\\n|\\r|\\n/", variable_get('brukar_forced_greenlit_uri', ''));
+
+    foreach($uris as $i => $uri) {
+      $menu_item = menu_get_item($uri);
+      if($menu_item) {
+        $items[$menu_item['path']]['access arguments'][] = 'brukar forced ignore';
+      }
+      elseif(isset($items[$uri])) {
+        $items[$uri]['access arguments'][] = 'brukar forced ignore';
+      }
+    }
   }
 }
 
@@ -79,7 +108,7 @@ function brukar_client_init() {
   
     if (user_is_anonymous()) {
       // Forced login
-      if (variable_get('brukar_forced', '0') != 0 && !brukar_client_page_greenlit($_GET['q']))
+      if (variable_get('brukar_forced', '0') != 0 && !brukar_client_page_greenlit())
         brukar_client_user_trigger();
   
       // Magic login
@@ -89,21 +118,20 @@ function brukar_client_init() {
   }
 }
 
-
-function brukar_client_page_greenlit($URI) {
-  $green_uris = &drupal_static(__FUNCTION__);
-
-  if(!$green_uris) {
-    if($cache = cache_get('brukar_forced_greenlit_uri', 'cache')) {
-      $green_uris = $cache->data;
-    }
-    else {
-      $green_uris = array_flip(preg_split("/\\r\\n|\\r|\\n/", variable_get('brukar_forced_greenlit_uri', '')));
-      cache_set('brukar_forced_greenlit_uri', $green_uris, 'cache');
-    }
+/**
+ * Check menu item for current URL if "brukar forced ignore" is
+ * set as access argument.
+ * @return bool
+ */
+function brukar_client_page_greenlit() {
+  $menu_item = menu_get_item();
+  if($menu_item) {
+    $access_arguments = array_flip(menu_unserialize($menu_item['access_arguments'], $menu_item['map']));
+    return isset($access_arguments['brukar forced ignore']);
   }
-
-  return isset($green_uris[$URI]);
+  else {
+    return FALSE;
+  }
 }
 
 /**
