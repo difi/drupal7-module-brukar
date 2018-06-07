@@ -168,3 +168,15 @@ function _brukar_delete_user_proccess_http_accept($http_accept) {
 
   return $langs;
 }
+
+/**
+ * Implements hook_permission().
+ */
+function brukar_delete_user_permission() {
+  $permission['administer brukar_delete_user delete_user'] = [
+    'title' => t('View list delete user'),
+    'description' => t('Administer list of users for deleting'),
+  ];
+
+  return $permission;
+}
