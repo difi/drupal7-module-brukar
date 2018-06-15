@@ -104,6 +104,7 @@ function brukar_delete_user_delete_user($userkey) {
  */
 function _brukar_delete_user_send_response($xml_payload = null, $status_code = 200) {
   http_response_code($status_code);
+  header('Access-Control-Allow-Origin: *'); // Required for external API calls
   if(isset($xml_payload)) {
     $accept_list = _brukar_delete_user_proccess_http_accept($_SERVER['HTTP_ACCEPT']);
     $content_type = null;
