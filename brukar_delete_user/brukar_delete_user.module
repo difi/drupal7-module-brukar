@@ -19,7 +19,8 @@ function brukar_delete_user_menu() {
       'title' => 'Delete User',
       'page callback' => 'brukar_delete_user_handle_user_request',
       'type' => MENU_CALLBACK,
-      'access arguments' => array('brukar admin'),
+      //'access arguments' => array('brukar admin'),
+      'access argument' => TRUE,
     ),
   ];
 }
