@@ -19,8 +19,9 @@ function brukar_delete_user_menu() {
       'title' => 'Delete User',
       'page callback' => 'brukar_delete_user_handle_user_request',
       'type' => MENU_CALLBACK,
+      /* DIFI-5781 Fjerner adgangskrav for å unngå at det skaper problemer ved første prodsetting. */
       //'access arguments' => array('brukar admin'),
-      'access argument' => TRUE,
+      'access callback' => TRUE,
     ),
   ];
 }
