@@ -29,7 +29,7 @@ function brukar_delete_user_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '60';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskyving';
@@ -79,7 +79,7 @@ function brukar_delete_user_views_default_views() {
       'empty_column' => 0,
     ),
   );
-  /* Felt: Massehandlinger: Bruker */
+  /* Felt: Bulk operations: Bruker */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_user';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
@@ -104,28 +104,25 @@ function brukar_delete_user_views_default_views() {
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  /* Felt: Bruker: Fornavn */
-  $handler->display->display_options['fields']['field_given_name']['id'] = 'field_given_name';
-  $handler->display->display_options['fields']['field_given_name']['table'] = 'field_data_field_given_name';
-  $handler->display->display_options['fields']['field_given_name']['field'] = 'field_given_name';
-  /* Felt: Bruker: Etternavn */
-  $handler->display->display_options['fields']['field_surname']['id'] = 'field_surname';
-  $handler->display->display_options['fields']['field_surname']['table'] = 'field_data_field_surname';
-  $handler->display->display_options['fields']['field_surname']['field'] = 'field_surname';
+  /* Felt: Bruker: E-post */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
   /* Felt: Bruker: Roller */
   $handler->display->display_options['fields']['rid']['id'] = 'rid';
   $handler->display->display_options['fields']['rid']['table'] = 'users_roles';
   $handler->display->display_options['fields']['rid']['field'] = 'rid';
-  /* Felt: Bruker: Rediger lenke */
-  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['table'] = 'users';
-  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  /* Sorteringskriterium: Bruker: Dato opprettet */
+  /* Felt: Bruker: Cancel link */
+  $handler->display->display_options['fields']['cancel_node']['id'] = 'cancel_node';
+  $handler->display->display_options['fields']['cancel_node']['table'] = 'users';
+  $handler->display->display_options['fields']['cancel_node']['field'] = 'cancel_node';
+  $handler->display->display_options['fields']['cancel_node']['label'] = 'Fjern';
+  /* Sort criterion: Bruker: Created date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'users';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter-kriterier: Bruker: Delete User (field_delete) */
+  /* Filter criterion: Bruker: Delete User (field_delete) */
   $handler->display->display_options['filters']['field_delete_value']['id'] = 'field_delete_value';
   $handler->display->display_options['filters']['field_delete_value']['table'] = 'field_data_field_delete';
   $handler->display->display_options['filters']['field_delete_value']['field'] = 'field_delete_value';
@@ -159,14 +156,14 @@ function brukar_delete_user_views_default_views() {
     t('neste ›'),
     t('siste »'),
     t('Bruker'),
-    t('- Velg en handling -'),
+    t('- Choose an operation -'),
     t('Slett'),
     t('Navn'),
-    t('Fornavn'),
-    t('Etternavn'),
+    t('E-post'),
     t('Roller'),
-    t('Rediger lenke'),
+    t('Fjern'),
     t('Page'),
+    t('more'),
   );
 
   $views['view_user_delete'] = $view;
