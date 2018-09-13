@@ -94,7 +94,7 @@ function brukar_client_oauth_callback() {
 function brukar_client_login($data) {
   global $user;
 
-  if($data['termsAccepted'] == 0){
+  if(isset($data['termsAccepted']) && $data['termsAccepted'] == 0){
     /* if terms is not accepted, redirect user to brukar.difi.no for accepting terms */
     drupal_goto(variable_get('brukar_url'));
 
