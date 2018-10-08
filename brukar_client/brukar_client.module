@@ -164,7 +164,7 @@ function brukar_client_init() {
  */
 function brukar_client_page_greenlit() {
   $menu_item = menu_get_item();
-  if($menu_item) {
+  if($menu_item && isset($menu_item['map'])) {
     $access_arguments = array_flip(menu_unserialize($menu_item['access_arguments'], $menu_item['map']));
     return isset($access_arguments['brukar forced ignore']);
   }
@@ -266,7 +266,9 @@ function brukar_client_user_logout($account) {
   if($params){
     /* If logout parameter is not set, we redirect user to brukar.difi.no to perform logout from brukar.difi.no first.
        brukar.difi.no will redirect user back to site with url paremter logout=true */
-    if ($params['logout'] != "true") {
+    if ($params['logout'] != "true" //making exception for masquerade...
+      && (strpos($_REQUEST['q'], 'masquerade/switch/') != FALSE
+        || strpos($_REQUEST['q'], 'masquerade/unswitch/') != FALSE)) {
       $url = variable_get('brukar_url', '') . "logout?returnTo=" . $base_url . "/user/logout";
       drupal_goto($url);
     }
