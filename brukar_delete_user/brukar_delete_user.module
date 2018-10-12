@@ -82,6 +82,7 @@ function brukar_delete_user_delete_user($userkey) {
       $user = entity_metadata_wrapper('user', $user_db->uid);
       $user->field_delete->set(1);
       $user->save();
+      module_invoke_all(brukar_delete_user_incoming_delete, $user_db->uids);
     }
 
     $status->nodeValue = 'OK';
