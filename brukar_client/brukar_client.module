@@ -263,10 +263,11 @@ function brukar_client_username_alter(&$name, $account) {
 function brukar_client_user_logout($account) {
   global $base_url;
   $params = drupal_get_query_parameters();
-  if($params){
+  
+  if(!empty($params)){
     /* If logout parameter is not set, we redirect user to brukar.difi.no to perform logout from brukar.difi.no first.
        brukar.difi.no will redirect user back to site with url paremter logout=true */
-    if ($params['logout'] != "true" //making exception for masquerade...
+    if (isset($params['logout']) && $params['logout'] != "true" //making exception for masquerade...
       && (strpos($_REQUEST['q'], 'masquerade/switch/') != FALSE
         || strpos($_REQUEST['q'], 'masquerade/unswitch/') != FALSE)) {
       $url = variable_get('brukar_url', '') . "logout?returnTo=" . $base_url . "/user/logout";
